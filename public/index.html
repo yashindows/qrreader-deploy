@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR-сканер</title>
+  </head>
+  <body>
+    <div
+      class="wrapper"
+      style="
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <video id="video" width="70%" height="70%" autoplay></video>
+      <form method="post" action="/add-data" id="result">
+        <input type="hidden" name="name" />
+        <input type="hidden" name="thing" />
+        <input type="hidden" name="num" />
+        <input type="hidden" name="date" />
+      </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest/umd/index.min.js"></script>
+    <script>
+      const video = document.getElementById("video");
+      const resultElement = document.getElementById("result");
+      let reader;
+
+      async function startScanner() {
+        reader = new ZXing.BrowserQRCodeReader();
+        const formats = [ZXing.BarcodeFormat.QR_CODE];
+        const hints = new Map();
+        hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, formats);
+        const qrData = {
+          name: "",
+          thing: "",
+          num: "",
+          date: "",
+        };
+        try {
+          await reader.decodeFromVideoDevice(
+            undefined,
+            "video",
+            (result, err) => {
+              if (result) {
+                const newString = result.text.split(/[:;\n\r]+/);
+
+                resultElement.name.value = newString[1];
+                resultElement.thing.value = newString[3];
+                resultElement.num.value = newString[5];
+                resultElement.date.value = newString[7];
+
+                resultElement.submit();
+                reader.reset();
+              } else if (err && !(err instanceof ZXing.NotFoundException)) {
+                console.error("Ошибка сканирования:", err);
+              }
+            }
+          );
+        } catch (error) {
+          console.error("Не удалось получить доступ к камере:", error);
+          resultElement.textContent =
+            "Не удалось получить доступ к камере. Пожалуйста, дайте разрешение.";
+        }
+      }
+
+      window.addEventListener("load", startScanner);
+
+      //   const data = {
+      //     name: "ФИО",
+      //     thing: "чтогоооо",
+      //     num: 121233,
+      //     date: new Date().toLocaleTimeString(),
+      //   };
+
+      //   resultElement.name.value = data.name;
+      //   resultElement.thing.value = data.thing;
+      //   resultElement.num.value = data.num;
+      //   resultElement.date.value = data.date;
+
+      // resultElement.submit();
+    </script>
+  </body>
+</html>
