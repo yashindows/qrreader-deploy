@@ -11,7 +11,9 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 const YA_API_URL = "https://cloud-api.yandex.net/v1/disk/resources";
-const TOKEN = "y0__xCpvsr-Bhje_zsgipqeyxUw_eWBiwh8hxg-YvhPvUhTpsApg5iQXhKpuQ";
+// const TOKEN = "y0__xCpvsr-Bhje_zsgipqeyxUw_eWBiwh8hxg-YvhPvUhTpsApg5iQXhKpuQ";
+const TOKEN = process.env.token;
+
 
 const yandexApi = axios.create({
   baseURL: YA_API_URL,
