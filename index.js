@@ -5,7 +5,6 @@ const fs = require("fs");
 
 const app = express();
 const port = 3000;
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -85,3 +84,4 @@ app.post("/add-data", (req, res) => {
 });
 
 app.listen(port, () => console.log(`follow: http://127.0.0.1:${port}`));
+
