@@ -10,7 +10,6 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 const YA_API_URL = "https://cloud-api.yandex.net/v1/disk/resources";
-// const TOKEN = "y0__xCpvsr-Bhje_zsgipqeyxUw_eWBiwh8hxg-YvhPvUhTpsApg5iQXhKpuQ";
 const TOKEN = process.env.token;
 
 
@@ -83,5 +82,6 @@ app.post("/add-data", (req, res) => {
   editExcelOnYandexDisk("/data.xlsx", newData);
 });
 
-app.listen(port, () => console.log(`follow: http://127.0.0.1:${port}`));
+app.listen(port, () => console.log('server start'));
+
 
