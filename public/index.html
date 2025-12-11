@@ -14,6 +14,7 @@
         flex-direction: column;
       "
     >
+      <button style="padding: 10px; font-family='system-ui, sans-serif'; background-color: transparent; color: #333;" onClick="startScanner()">Scan QR</button>
       <video id="video" style="width: 100vw; height: 100dvh;" autoplay></video>
       <form method="post" action="/add-data" id="result">
         <input type="hidden" name="name" />
@@ -27,8 +28,9 @@
       const video = document.getElementById("video");
       const resultElement = document.getElementById("result");
       let reader;
-
+      const btn = document.querySelector('button');
       async function startScanner() {
+        btn.style.display = "none";
         reader = new ZXing.BrowserQRCodeReader();
         const formats = [ZXing.BarcodeFormat.QR_CODE];
         const hints = new Map();
@@ -84,5 +86,6 @@
     </script>
   </body>
 </html>
+
 
 
