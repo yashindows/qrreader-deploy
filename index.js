@@ -72,6 +72,7 @@ app.post("/add-data", (req, res) => {
       res.send("Файл успешно обновлен!")
     } catch (error) {
       console.error("Ошибка:", error.response?.data || error.message);
+      res.send("Ошибка:", error.message);
     }
   }
 
@@ -84,6 +85,7 @@ app.post("/add-data", (req, res) => {
 });
 
 app.listen(port, () => console.log('server start'));
+
 
 
 
