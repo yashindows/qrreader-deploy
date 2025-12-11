@@ -81,10 +81,11 @@ app.post("/add-data", (req, res) => {
     [req.body.name, req.body.thing, req.body.num, req.body.date],
   ];
 
-  editExcelOnYandexDisk("/data.xlsx", newData);
+  editExcelOnYandexDisk("/ЖУРНАЛ/Инвентаризация.xlsx", newData);
 });
 
 app.listen(port, () => console.log('server start'));
+
 
 
 
