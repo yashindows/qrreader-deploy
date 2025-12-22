@@ -2,6 +2,9 @@ const express = require("express");
 const axios = require("axios");
 const XLSX = require("xlsx");
 const fs = require("fs");
+const path = require("path");
+//только локально
+require("dotenv").config();
 
 const app = express();
 const port = 3000;
@@ -10,8 +13,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 const YA_API_URL = "https://cloud-api.yandex.net/v1/disk/resources";
-const TOKEN = process.env.token;
-
+const TOKEN = process.env.TOKEN;
 
 const yandexApi = axios.create({
   baseURL: YA_API_URL,
@@ -22,8 +24,6 @@ const yandexApi = axios.create({
 });
 
 app.post("/add-data", (req, res) => {
-  //попробовать перенести
-
   async function editExcelOnYandexDisk(filePath, newData) {
     try {
       // 1. Получить ссылку на скачивание файла
@@ -69,7 +69,7 @@ app.post("/add-data", (req, res) => {
         },
       });
       console.log("Файл успешно обновлен!");
-      res.send("Файл успешно обновлен!")
+      res.sendFile(path.join(__dirname, "success.html"));
     } catch (error) {
       console.error("Ошибка:", error.response?.data || error.message);
       res.send("Ошибка:", error.message);
@@ -84,10 +84,4 @@ app.post("/add-data", (req, res) => {
   editExcelOnYandexDisk("/ЖУРНАЛ/Инвентаризация.xlsx", newData);
 });
 
-app.listen(port, () => console.log('server start'));
-
-
-
-
-
-
+app.listen(port, () => console.log("server start"));
