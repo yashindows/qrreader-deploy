@@ -1,21 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>QR-сканер</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qrreader</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .wrapper {
+        display: flex;
+        height: 100dvh;
+        width: 100vw;
+        justify-content: center;
+      }
+      #video,
+      form {
+        display: none;
+      }
+      #video,
+      .result,
+      button {
+        align-self: center;
+      }
+      #video {
+        position: fixed;
+        right: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+      }
+    </style>
   </head>
   <body>
-    <div
-      class="wrapper"
-      style="
-        height: 100dvh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      "
-    >
-      <button style="padding: 10px; font-size: 42px; border-radius: 5px; border: none; box-shadow: 0 0 2px #333; font-family: 'system-ui', sans-serif; background-color: transparent; color: #333;" onClick="startScanner()">Scan QR</button>
-      <video id="video" style="width: 100vw; height: 100dvh;" autoplay></video>
+    <div class="wrapper">
+      <button onClick="startScanner()">Scan QR</button>
+      <video id="video" autoplay></video>
       <form method="post" action="/add-data" id="result">
         <input type="hidden" name="name" />
         <input type="hidden" name="thing" />
@@ -28,8 +50,9 @@
       const video = document.getElementById("video");
       const resultElement = document.getElementById("result");
       let reader;
-      const btn = document.querySelector('button');
+      const btn = document.querySelector("button");
       async function startScanner() {
+        video.style.display = "block";
         btn.style.display = "none";
         reader = new ZXing.BrowserQRCodeReader();
         const formats = [ZXing.BarcodeFormat.QR_CODE];
@@ -86,9 +109,3 @@
     </script>
   </body>
 </html>
-
-
-
-
-
-
