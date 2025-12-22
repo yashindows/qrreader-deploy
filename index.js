@@ -4,7 +4,7 @@ const XLSX = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 //только локально
-require("dotenv").config();
+// require("dotenv").config();
 
 const app = express();
 const port = 3000;
@@ -85,3 +85,4 @@ app.post("/add-data", (req, res) => {
 });
 
 app.listen(port, () => console.log("server start"));
+
